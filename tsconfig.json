@@ -1,8 +1,11 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./", // 🏆 Fix 1: Base URL define karna zaroori hai paths ke liye
+
+    "paths": {
+      "angular-wizard": ["./dist/angular-wizard"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -13,7 +16,8 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "ES2022",
+    "moduleResolution": "bundler"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -22,5 +26,19 @@
     "typeCheckHostBindings": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/angular-wizard/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/angular-wizard/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/cats-wizard/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/cats-wizard/tsconfig.spec.json"
+    }
+  ]
 }

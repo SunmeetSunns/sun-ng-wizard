@@ -1,0 +1,47 @@
+<div class="create_adaptor h-100" [class.fullscreen-modal-view]="isFullScreen">
+  <div class="custom_model">
+    <div class="custom_model_header">
+      @if (stepsInternalConfig.length > 1) {
+        <div class="custom_model_progress_bar d-flex">
+          @for (step of stepsInternalConfig; track $index) {
+            <div
+              [ngClass]="
+                step?.state === 'done' || step?.state === 'active' || step?.state === 'skipped'
+                  ? 'progress_done'
+                  : 'w-100'
+              "
+            ></div>
+          }
+        </div>
+      }
+
+      <div class="header_content">
+        <div class="heading">
+          <span class="name" [attr.title]="wizardTitle">{{ wizardTitle }}</span>
+          @if (currentStepConfig?.title) {
+            <span class="step">Step {{ activeStepNumber }}: {{ currentStepConfig?.title }}</span>
+          }
+        </div>
+
+        <div class="header_icons d-flex gap-3 align-items-center">
+          <div class="add_bg pointer" (click)="toggleFullScreen()">
+            <i-feather
+              [name]="isFullScreen ? 'minimize-2' : 'maximize-2'"
+              class="fixed_size"
+            ></i-feather>
+          </div>
+          <div class="add_bg pointer" (click)="closeWizard('closeModal')">
+            <i-feather name="x" class="fixed_size"></i-feather>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom_model_body h-100">
+      @if (currentStepComponent) {
+        <ng-container *ngComponentOutlet="currentStepComponent; inputs: getComponentInputs()">
+        </ng-container>
+      }
+    </div>
+  </div>
+</div>

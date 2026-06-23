@@ -1,0 +1,349 @@
+/* You can add global styles to this file, and also import other style files */
+// @forward './scss/base/index';
+// @forward './scss/sass-utils/index';
+// @forward './scss/component/index';
+@use '../../../scss/index' as *;
+.pointer {
+  cursor: pointer;
+}
+
+i-feather {
+  display: flex !important;
+  @include box(24px, 24px);
+}
+
+// Small ModelSectio Start Here
+.modal-dialog.width_872 {
+  max-width: 45.4%;
+}
+.modal-dialog.width_620 {
+  max-width: 32.3%;
+}
+
+.modal-dialog.width_636 {
+  max-width: 33.125%;
+}
+// Small ModelSectio End Here
+
+// --------------------------- CUSTOM-MODEL
+.largeModel.modal-dialog {
+  max-width: max(810px, 90%);
+  height: calc(100vh - rem(96px));
+  margin: auto;
+  margin: rem(80px) auto rem(16px) auto;
+  display: flex;
+
+  .modal-content {
+    border-radius: rem(16px);
+    border: 0;
+  }
+
+  .custom_model {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .custom_model_header {
+    min-height: rem(64px);
+    border-top-left-radius: rem(16px);
+    border-top-right-radius: rem(16px);
+    overflow: hidden;
+    box-shadow: 0px 2px 40px var(--model-shadow);
+
+    .header_content {
+      padding: 0 rem(32px);
+      @include flex(space-between, center);
+      min-height: rem(56px);
+
+      &.white_line {
+        min-height: rem(64px);
+      }
+
+      .heading {
+        @include flex(flex-start, center, rem(16px));
+
+        .name {
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 600;
+          color: var(--neutral-600) !important;
+        }
+
+        .step {
+          @include fontStyle(var(--fs-12), rem(18px), 500);
+          color: var(--blue-700);
+          background-color: var(--blue-100);
+          border-radius: rem(16px);
+          padding: rem(3px) rem(8px);
+        }
+      }
+    }
+  }
+
+  .custom_model_progress_bar {
+    height: rem(8px);
+    background-color: var(--neutral-200);
+
+    .progress_done {
+      background-color: var(--blue-600);
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .custom_model_body {
+    .myForm {
+      padding: rem(32px);
+
+      .heading {
+        @include fontStyle(var(--fs-24), rem(24px), 600);
+        color: var(--black-800);
+        margin-bottom: rem(16px);
+        text-align: center;
+      }
+
+      .desc {
+        text-align: center;
+        @include fontStyle(var(--fs-18), rem(24px), 400);
+      }
+    }
+  }
+
+  .custom_model_message {
+    height: rem(88px);
+    @include flex(center, center);
+    padding: rem(16px) rem(32px);
+  }
+
+  .custom_model_footer {
+    padding: 0 rem(32px);
+    min-height: rem(88px);
+    @include flex(space-between, center);
+    box-shadow: 0 rem(2px) rem(40px) var(--model-shadow);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
+.modal.fullscreen-modal {
+  padding: 0 !important;
+
+  .custom_model_body.modal_scrl {
+    height: calc(100vh - rem(154px));
+  }
+
+  .scroll_bar {
+    height: calc(100vh - rem(298px));
+  }
+
+  .scrl {
+    height: calc(100vh - rem(265px)) !important;
+  }
+
+  .contact_details_scroll {
+    height: calc(100vh - rem(313px));
+  }
+
+  .form_section {
+    height: calc(100vh - rem(313px)) !important;
+  }
+
+  .no_data_found {
+    height: calc(100vh - rem(152px)) !important;
+  }
+
+  .proto_table_wrapper .tabs_section .left_panel,
+  .proto_table_wrapper .tabs_section .right_panel {
+    height: calc(100vh - rem(413px)) !important;
+  }
+
+  .accordian_scroll {
+    max-height: calc(100vh - rem(495px)) !important;
+  }
+
+  .form_wrapper {
+    height: calc(100vh - rem(316px)) !important;
+  }
+
+  .modal-dialog {
+    max-width: 100% !important;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 !important;
+  }
+
+  .modal-content {
+    height: 100%;
+    border-radius: 0 !important;
+  }
+
+  .custom_model {
+    height: 100%;
+  }
+
+  .custom_model_body {
+    flex: 1;
+    overflow: auto;
+  }
+
+  .custom_model_footer {
+    position: relative;
+  }
+}
+.row_div {
+  @include flex(flex-start, center);
+}
+
+.no_data_found {
+  @include flex(center, center, '', column);
+  @include box(100%, 100%);
+  text-align: center;
+
+  .clip-path-img {
+    @include box(rem(435px), rem(255px));
+    margin-bottom: rem(20px);
+  }
+
+  .heading {
+    @include fontStyle(var(--fs-24), rem(32px), 700);
+    color: var(--neutral-600);
+    margin-bottom: rem(10px);
+  }
+
+  .description {
+    @include fontStyle(var(--fs-18), rem(24px));
+    color: var(--neutral-500);
+    margin-bottom: rem(20px);
+  }
+}
+
+// Header Image Section For Normal Icon and Hover Icon Start Here
+.search_icon_wrapper {
+  position: relative;
+  @include hoverSwap('.search_icon', '.search_hover_icon');
+}
+
+.add_icon_wrapper {
+  position: relative;
+  @include hoverSwap('.add_icon', '.add_icon_hover');
+}
+
+.filter_icon_wrapper {
+  position: relative;
+  @include hoverSwap('.filter_icon', '.filter_hover_icon');
+}
+
+.header_icon_wrapper {
+  position: relative;
+  @include hoverSwap('.header_icon', '.header_hover_icon');
+}
+
+/* Custom class for tooltip css starts here */
+.customClass.tooltip.show {
+  opacity: 1;
+  margin-top: rem(6px);
+}
+
+.customClass .tooltip-inner {
+  background: var(--white);
+  @include fontStyle(rem(14px), rem(18px), 600);
+  border-radius: rem(8px);
+  padding: rem(8px) rem(12px);
+  max-width: rem(311px);
+  min-width: rem(60px);
+  color: var(--neutral-500);
+  border: 0;
+  position: relative;
+  box-shadow: 0 rem(4px) rem(10px) rem(6px) #0a0d121a;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.customClass_info .tooltip-inner {
+  @include fontStyle(var(--fs-16), rem(24px), 400);
+  color: var(--gray-700);
+}
+
+.bs-tooltip-auto[data-popper-placement^='bottom'] .tooltip-arrow::before,
+.bs-tooltip-bottom .tooltip-arrow::before {
+  border-width: 0 calc(var(--bs-tooltip-arrow-width) * 0.5) var(--bs-tooltip-arrow-height);
+  content: '';
+  position: absolute;
+  bottom: 0%;
+  left: rem(-2px);
+  border-bottom: rem(10px) solid var(--neutral-50);
+  border-right: rem(10px) solid transparent;
+  border-left: rem(10px) solid transparent;
+  border-color: transparent !important;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0%;
+  border-bottom: rem(8px) solid var(--white);
+  border-right: rem(8px) solid transparent;
+  border-left: rem(8px) solid transparent;
+}
+
+.tooltip-open {
+  overflow: hidden;
+}
+
+.tooltip .tooltip-arrow {
+  z-index: 100;
+}
+// No Data Found Section Start Here
+.no_data_found {
+  @include flex(center, center, '', column);
+  @include box(100%, 100%);
+  text-align: center;
+
+  .clip-path-img {
+    @include box(rem(435px), rem(254px));
+    margin-bottom: rem(16px);
+  }
+
+  .heading {
+    @include fontStyle(var(--fs-24), rem(32px), 700);
+    color: var(--neutral-600);
+    margin-bottom: rem(16px);
+  }
+
+  .description {
+    @include fontStyle(var(--fs-18), rem(24px));
+    color: var(--neutral-500);
+    margin-bottom: rem(16px);
+  }
+}
+
+.textTruncate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+// No Data Found Section End Here
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: inherit;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.route_body:has(.logs_audit_container) .activated_route {
+  background-color: var(--neutral-50);
+}

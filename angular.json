@@ -3,5 +3,115 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "angular-wizard": {
+      "projectType": "library",
+      "root": "projects/angular-wizard",
+      "sourceRoot": "projects/angular-wizard/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-wizard/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-wizard/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/angular-wizard/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "cats-wizard": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/cats-wizard",
+      "sourceRoot": "projects/cats-wizard/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/cats-wizard/src/main.ts",
+            "tsConfig": "projects/cats-wizard/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/cats-wizard/public"
+              }
+            ],
+            "styles": ["projects/cats-wizard/src/styles.scss"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "cats-wizard:build:production"
+            },
+            "development": {
+              "buildTarget": "cats-wizard:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/cats-wizard/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/cats-wizard/public"
+              }
+            ],
+            "styles": ["projects/cats-wizard/src/styles.scss"],
+
+            "stylePreprocessorOptions": {
+              "includePaths": ["./", "projects/angular-wizard/src"]
+            }
+          }
+        }
+      }
+    }
   }
 }
