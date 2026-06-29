@@ -6,13 +6,13 @@
 // ❌ Purani khud ko call karne wali line HATAO: @use '../../src/styles.scss' as *;
 // ❌ Purani library wali line yahan se HATAO: @import '../../../projects/angular-wizard/src/scss/index.scss';
 
+@use '../../../dist/angular-wizard/styles/wizard-theme.scss' as *;
+
 /* App level global CSS styles default yahan niche likh sakti ho */
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--neutral-50, #f8f9fa); /* Just checking reference */
 }
-
-@import 'scss/wizard-theme.scss';
 
 // Test rule

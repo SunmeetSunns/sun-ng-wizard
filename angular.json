@@ -52,7 +52,11 @@
                 "input": "projects/cats-wizard/public"
               }
             ],
-            "styles": ["projects/cats-wizard/src/styles.scss"]
+            "styles": [
+              "projects/cats-wizard/src/styles.scss",
+
+              "dist/angular-wizard/styles/wizard-theme.scss"
+            ]
           },
           "configurations": {
             "production": {
@@ -104,11 +108,11 @@
                 "input": "projects/cats-wizard/public"
               }
             ],
-            "styles": ["projects/cats-wizard/src/styles.scss"],
+            "styles": [
+              "projects/cats-wizard/src/styles.scss",
 
-            "stylePreprocessorOptions": {
-              "includePaths": ["./", "projects/angular-wizard/src"]
-            }
+              "dist/angular-wizard/styles/wizard-theme.scss"
+            ]
           }
         }
       }

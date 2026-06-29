@@ -1,1 +1,41 @@
-<p>dummy-comp-1 works!</p>
+<div class="custom_model_body modal_scrl">
+  <div class="myForm">
+    <div class="heading">Select Method</div>
+    <div class="desc">Select the method you want to proceed with to configure the product.</div>
+
+    <div class="feature">
+      @for (method of methods; track $index) {
+        <div
+          class="create_manually"
+          (click)="selectMethod($index)"
+          [class.disabled]="method.disabled"
+        >
+          <div class="module" [ngClass]="{ active: selectedMethod === $index }">
+            @if (selectedMethod === $index) {
+              <img src="assets/common/check_img.svg" class="check_icon" />
+            }
+
+            <img [src]="method.img" />
+          </div>
+          <div class="head">{{ method.title }}</div>
+          <div class="manual_text">{{ method.desc }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="custom_model_footer">
+  <div class="left">
+    <!-- <button class="outline_btn" (click)="goToPrevStep()">Back</button> -->
+  </div>
+  <div class="right">
+    <button
+      class="fill_btn"
+      (click)="processAndGoToNextStep()"
+      [ngClass]="{ fill_btn: selectedMethod !== null, fill_disable_btn: selectedMethod == null }"
+    >
+      Save and Next
+    </button>
+  </div>
+</div>

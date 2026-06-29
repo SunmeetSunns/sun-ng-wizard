@@ -7,5 +7,16 @@
     "styleIncludePaths": ["../../", "../../scss", "src/scss"]
   },
   "allowedNonPeerDependencies": ["angular-feather", "feather-icons"],
-  "assets": [{ "input": "src/scss", "glob": "**/*.scss", "output": "scss" }]
+  "assets": [
+    {
+      "glob": "**/*",
+      "input": "src/scss",
+      "output": "scss"
+    },
+    {
+      "glob": "**/*",
+      "input": "src/styles",
+      "output": "styles"
+    }
+  ]
 }

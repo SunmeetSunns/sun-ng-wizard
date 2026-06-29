@@ -2,19 +2,35 @@
 // @forward './scss/base/index';
 // @forward './scss/sass-utils/index';
 // @forward './scss/component/index';
-@use 'scss/index' as *;
+@use '../scss/function' as *;
+@use '../scss/mixins' as *;
+@use '../scss/variable' as *;
+
+.test {
+  margin: rem(32px);
+  color: red;
+  font-size: 5px;
+  font-weight: bold;
+}
 .pointer {
   cursor: pointer;
 }
 
 i-feather {
   display: flex !important;
-  @include box(24px, 24px);
+  @include box(rem(24px), rem(24px));
 }
 
 // Small ModelSectio Start Here
 .modal-dialog.width_872 {
   max-width: 45.4%;
+}
+
+.sunmeet {
+  color: pink;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
 }
 .modal-dialog.width_620 {
   max-width: 32.3%;
@@ -346,4 +362,53 @@ input:-webkit-autofill:active {
 
 .route_body:has(.logs_audit_container) .activated_route {
   background-color: var(--neutral-50);
+}
+.header_icons {
+  @include flex('', center, rem(8px));
+
+  .add_bg {
+    @include box(rem(28px), rem(28px));
+    @include flex(center, center, '');
+    cursor: pointer;
+
+    &:hover {
+      border: rem(1px) solid var(--neutral-200);
+      background-color: var(--neutral-50);
+      border-radius: rem(4px);
+    }
+    .fixed_size {
+      @include box(rem(19px), rem(19px));
+      cursor: pointer;
+      position: relative;
+    }
+  }
+}
+
+.tooltip-box {
+  position: absolute;
+  background: var(--text-heading-secondary);
+  color: var(--surface-background-canvas);
+  padding: rem(8px) rem(12px);
+  border-radius: rem(8px);
+  top: rem(54px);
+  display: none;
+}
+
+/* Upward Arrow */
+.tooltip-box::before {
+  content: '';
+  position: absolute;
+  top: auto;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: rem(6px) solid transparent;
+  border-right: rem(6px) solid transparent;
+  border-bottom: rem(6px) solid var(--text-heading-secondary);
+}
+
+.add_bg:hover .tooltip-box {
+  display: block;
 }
