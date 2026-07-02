@@ -1,4 +1,4 @@
-# 🚀 sun-ng-stepper-wizard
+# 🚀 ngx-stepper-wizard
 
 A modern, lightweight and highly customizable **Angular Stepper Wizard** built with Standalone Components.
 
@@ -31,7 +31,7 @@ Create beautiful multi-step workflows with dynamic navigation, shared state mana
 Install the library.
 
 ```bash
-npm install sun-ng-stepper-wizard
+npm install ngx-stepper-wizard
 ```
 
 Install the required peer dependencies.
@@ -51,7 +51,7 @@ Add Bootstrap and the Wizard theme inside **angular.json**.
   "styles": [
     "src/styles.scss",
     "node_modules/bootstrap/dist/css/bootstrap.min.css",
-    "node_modules/@sunmeet/ng-stepper-wizard/styles/wizard-theme.scss"
+    "node_modules/ngx-stepper-wizard/styles/wizard-theme.scss"
   ]
 }
 ```

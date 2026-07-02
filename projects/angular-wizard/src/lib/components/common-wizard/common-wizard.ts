@@ -16,8 +16,13 @@ import { FormsModule } from '@angular/forms';
 import { WizardInterface } from '../../wizard-interface';
 import { FeatherModule } from 'angular-feather';
 
+export interface WizardState {
+  title: string;
+  state: 'active' | 'done' | 'normal' | 'skipped';
+}
+
 @Component({
-  selector: 'ng-stepper-wizard',
+  selector: 'ngx-stepper-wizard',
   standalone: true,
   imports: [CommonModule, FormsModule, FeatherModule],
   templateUrl: './common-wizard.html',
@@ -25,48 +30,44 @@ import { FeatherModule } from 'angular-feather';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class NgStepperWizardComponent implements OnChanges, OnInit {
-  @Input() wizardId: string = 'connection-wizard';
+export class NgxStepperWizardComponent implements OnInit, OnChanges {
+  @Input() wizardId: string = 'ngx-stepper-wizard';
   @Input() wizardTitle: string = 'Create New Configuration';
   @Input() dynamicSteps: WizardInterface[] = [];
 
   @Output() onStepChange = new EventEmitter<{
     currentStep: number;
-    action: 'next' | 'prev' | 'skip';
+    action: 'next' | 'prev' | 'skip' | 'goto';
   }>();
 
   @Output() onComplete = new EventEmitter<void>();
   @Output() closeWizardEmitter = new EventEmitter<string>();
 
   activeStepNumber = 1;
-  stepsInternalConfig: any[] = [];
+  stepsInternalConfig: WizardState[] = [];
   isFullScreen = false;
 
-  /**
-   * Shared Wizard Data Store
-   * Persists data even when components are destroyed/recreated
-   */
   private wizardData: Record<string, any> = {};
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.initWizardEngine();
+    this.initWizard();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['dynamicSteps'] && !changes['dynamicSteps'].isFirstChange()) {
-      this.initWizardEngine();
+      this.initWizard();
     }
   }
 
-  private initWizardEngine(): void {
-    if (!this.dynamicSteps.length) return;
+  private initWizard(): void {
+    if (!this.dynamicSteps?.length) return;
 
     this.activeStepNumber = 1;
 
-    this.stepsInternalConfig = this.dynamicSteps.map((s, i) => ({
-      title: s.title,
+    this.stepsInternalConfig = this.dynamicSteps.map((_, i) => ({
+      title: this.dynamicSteps[i].title,
       state: i === 0 ? 'active' : 'normal',
     }));
 
@@ -81,21 +82,18 @@ export class NgStepperWizardComponent implements OnChanges, OnInit {
     return this.dynamicSteps[this.activeStepNumber - 1];
   }
 
-  closeWizard(from: string = ''): void {
-    this.closeWizardEmitter.emit(from);
+  closeWizard(source: string = ''): void {
+    this.closeWizardEmitter.emit(source);
   }
 
-  /**
-   * Wizard Controller exposed to all step components
-   */
+  // ===============================
+  // Wizard Controller
+  // ===============================
   private getWizardController() {
     return {
       next: () => this.moveToNextStep(),
-
       prev: () => this.moveToPreviousStep(),
-
-      skip: () => this.skipCurrentStep(),
-
+      skip: () => this.skipStep(),
       goToStep: (step: number) => this.goToStep(step),
 
       finish: () => this.onComplete.emit(),
@@ -106,13 +104,9 @@ export class NgStepperWizardComponent implements OnChanges, OnInit {
         this.wizardData[key] = value;
       },
 
-      getData: (key: string) => {
-        return this.wizardData[key];
-      },
+      getData: (key: string) => this.wizardData[key],
 
-      getAllData: () => {
-        return { ...this.wizardData };
-      },
+      getAllData: () => ({ ...this.wizardData }),
 
       currentStep: () => this.activeStepNumber,
 
@@ -120,139 +114,102 @@ export class NgStepperWizardComponent implements OnChanges, OnInit {
     };
   }
 
-  getComponentInputs(): { [key: string]: any } {
-    const config = this.currentStepConfig;
-
+  getComponentInputs(): Record<string, any> {
     return {
       contextId: this.wizardId,
-
       wizard: this.getWizardController(),
-
-      ...(config?.data || {}),
+      ...(this.currentStepConfig?.data || {}),
     };
   }
 
+  // ===============================
+  // Navigation
+  // ===============================
+
   moveToNextStep(): void {
-    if (this.activeStepNumber < this.dynamicSteps.length) {
-      const clone = [...this.stepsInternalConfig];
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'done',
-      };
-
-      this.activeStepNumber++;
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'active',
-      };
-
-      this.stepsInternalConfig = clone;
-
-      this.onStepChange.emit({
-        currentStep: this.activeStepNumber,
-        action: 'next',
-      });
-
-      this.cdr.markForCheck();
-    } else {
+    if (this.activeStepNumber >= this.dynamicSteps.length) {
       this.onComplete.emit();
-    }
-  }
-
-  skipCurrentStep(): void {
-    if (this.activeStepNumber < this.dynamicSteps.length) {
-      const clone = [...this.stepsInternalConfig];
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'skipped',
-      };
-
-      this.activeStepNumber++;
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'active',
-      };
-
-      this.stepsInternalConfig = clone;
-
-      this.onStepChange.emit({
-        currentStep: this.activeStepNumber,
-        action: 'skip',
-      });
-
-      this.cdr.markForCheck();
-    }
-  }
-
-  moveToPreviousStep(): void {
-    if (this.activeStepNumber > 1) {
-      const clone = [...this.stepsInternalConfig];
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'normal',
-      };
-
-      this.activeStepNumber--;
-
-      clone[this.activeStepNumber - 1] = {
-        ...clone[this.activeStepNumber - 1],
-        state: 'active',
-      };
-
-      this.stepsInternalConfig = clone;
-
-      this.onStepChange.emit({
-        currentStep: this.activeStepNumber,
-        action: 'prev',
-      });
-
-      this.cdr.markForCheck();
-    }
-  }
-
-  /**
-   * Jump directly to any step
-   */
-  goToStep(step: number): void {
-    if (step < 1 || step > this.dynamicSteps.length || step === this.activeStepNumber) {
       return;
     }
 
-    const clone = [...this.stepsInternalConfig];
+    this.updateStepState(this.activeStepNumber, 'done');
+    this.activeStepNumber++;
+    this.updateStepState(this.activeStepNumber, 'active');
 
-    clone.forEach((item, index) => {
-      if (index === step - 1) {
-        item.state = 'active';
-      } else if (index < step - 1) {
-        item.state = 'done';
-      } else {
-        item.state = 'normal';
-      }
-    });
+    this.emitStepChange('next');
+  }
+
+  moveToPreviousStep(): void {
+    if (this.activeStepNumber <= 1) return;
+
+    this.updateStepState(this.activeStepNumber, 'normal');
+    this.activeStepNumber--;
+    this.updateStepState(this.activeStepNumber, 'active');
+
+    this.emitStepChange('prev');
+  }
+
+  skipStep(): void {
+    if (this.activeStepNumber >= this.dynamicSteps.length) return;
+
+    this.updateStepState(this.activeStepNumber, 'skipped');
+    this.activeStepNumber++;
+    this.updateStepState(this.activeStepNumber, 'active');
+
+    this.emitStepChange('skip');
+  }
+
+  goToStep(step: number): void {
+    if (step < 1 || step > this.dynamicSteps.length || step === this.activeStepNumber) return;
+
+    this.stepsInternalConfig = this.stepsInternalConfig.map((item, i) => ({
+      ...item,
+      state: i === step - 1 ? 'active' : i < step - 1 ? 'done' : 'normal',
+    }));
 
     this.activeStepNumber = step;
-    this.stepsInternalConfig = clone;
 
     this.onStepChange.emit({
       currentStep: this.activeStepNumber,
-      action: 'next',
+      action: 'goto',
     });
 
     this.cdr.markForCheck();
   }
 
-  /**
-   * Reset entire wizard
-   */
   resetWizard(): void {
     this.wizardData = {};
-    this.initWizardEngine();
+    this.initWizard();
   }
+
+  // ===============================
+  // Helpers
+  // ===============================
+
+  private updateStepState(stepIndex: number, state: WizardState['state']): void {
+    const clone = [...this.stepsInternalConfig];
+
+    clone[stepIndex - 1] = {
+      ...clone[stepIndex - 1],
+      state,
+    };
+
+    this.stepsInternalConfig = clone;
+    this.cdr.markForCheck();
+  }
+
+  private emitStepChange(action: 'next' | 'prev' | 'skip' | 'goto'): void {
+    this.onStepChange.emit({
+      currentStep: this.activeStepNumber,
+      action,
+    });
+
+    this.cdr.markForCheck();
+  }
+
+  // ===============================
+  // UI
+  // ===============================
 
   toggleFullScreen(): void {
     this.isFullScreen = !this.isFullScreen;
@@ -261,13 +218,8 @@ export class NgStepperWizardComponent implements OnChanges, OnInit {
     const currentModal = modals[modals.length - 1] as HTMLElement;
 
     if (currentModal) {
-      if (this.isFullScreen) {
-        currentModal.classList.add('fullscreen-modal');
-        document.body.style.overflow = 'hidden';
-      } else {
-        currentModal.classList.remove('fullscreen-modal');
-        document.body.style.overflow = 'auto';
-      }
+      currentModal.classList.toggle('fullscreen-modal', this.isFullScreen);
+      document.body.style.overflow = this.isFullScreen ? 'hidden' : 'auto';
     }
 
     this.cdr.markForCheck();
