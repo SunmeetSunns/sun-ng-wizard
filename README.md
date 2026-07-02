@@ -1,139 +1,299 @@
-# Angular Wizard
+# 🚀 @sunmeet/ng-stepper-wizard
 
-A reusable, standalone, highly customizable Angular Wizard Component for building modern multi-step workflows.
+A modern, lightweight, fully customizable Angular Stepper Wizard built with Standalone Components.
+
+Create beautiful multi-step workflows with support for:
+
+- ✅ Dynamic Steps
+- ✅ Conditional Navigation
+- ✅ Skip Steps
+- ✅ Shared Data Between Steps
+- ✅ Full State Persistence
+- ✅ Jump To Any Step
+- ✅ Custom Themes
+- ✅ Standalone Components
+- ✅ Angular 20+
+
+---
+
+## Preview
 
 <p align="center">
-
-![Angular](https://img.shields.io/badge/Angular-15+-red)
-
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-
-![License](https://img.shields.io/npm/l/angular-wizard)
-
-![npm](https://img.shields.io/npm/v/angular-wizard)
-
+<img src="./docs/demo.gif" width="900">
 </p>
 
 ---
 
-## ✨ Features
+# Features
 
-- 🚀 Standalone Angular Component
-- 📄 Single & Multi-Step Wizards
-- ⚡ Dynamic Step Rendering
-- ⏭ Skip Optional Steps
-- 🔀 Jump to Any Step
-- 💾 Shared Data Store
-- 📦 Dynamic Component Loading
-- 🎨 Fully Customizable UI
-- 📱 Responsive Layout
-- 🔄 Full Wizard Reset
-- 🖥 Full Screen Mode
-- 🎯 Event Driven API
-- 🧩 Bootstrap Compatible
+| Feature | Supported |
+|----------|-----------|
+| Standalone Component | ✅ |
+| Multi Step Wizard | ✅ |
+| Single Step Wizard | ✅ |
+| Dynamic Steps | ✅ |
+| Skip Steps | ✅ |
+| Jump To Any Step | ✅ |
+| Previous / Next Navigation | ✅ |
+| Shared Data Store | ✅ |
+| Review & Submit | ✅ |
+| Conditional Flow | ✅ |
+| Custom Themes | ✅ |
+| Full Screen Mode | ✅ |
+| Responsive Layout | ✅ |
 
 ---
 
-## Installation
+# Installation
+
+Install the package.
 
 ```bash
-npm install angular-wizard
+npm install @sunmeet/ng-stepper-wizard
+```
+
+Install peer dependencies.
+
+```bash
+npm install bootstrap angular-feather feather-icons
+```
+
+Import Bootstrap.
+
+```json
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css"
+]
 ```
 
 ---
 
-## Import
+# Import
 
 ```ts
 import {
   CommonWizardComponent,
   WizardInterface
-} from 'angular-wizard';
+} from '@sunmeet/ng-stepper-wizard';
 ```
 
 ---
 
-## Basic Usage
+# Basic Usage
 
 ```html
-<acl-create-wizard
-  [wizardTitle]="'Student Registration'"
-  [dynamicSteps]="steps"
-  (onComplete)="submit()">
-</acl-create-wizard>
+<ng-stepper-wizard
+    [wizardTitle]="'Student Registration'"
+    [dynamicSteps]="steps"
+    (onComplete)="submit()">
+</ng-stepper-wizard>
 ```
 
 ---
 
-## Configure Steps
+# Creating Steps
 
 ```ts
 steps: WizardInterface[] = [
   {
-    title: 'Basic Details',
-    component: BasicDetailsComponent
+      title: 'Basic Details',
+      component: BasicDetailsComponent
   },
   {
-    title: 'Address',
-    component: AddressComponent
+      title: 'Department',
+      component: DepartmentComponent
   },
   {
-    title: 'Review',
-    component: ReviewComponent
+      title: 'Review',
+      component: ReviewComponent
   }
 ];
 ```
 
 ---
 
-## Wizard Controller
+# Wizard API
 
-Every step automatically receives a Wizard Controller.
+Every step automatically receives a **wizard controller**.
 
 ```ts
 @Input()
-wizard!: WizardController;
+wizard!: any;
 ```
 
-Available Methods
+Available methods
 
-| Method | Description |
-|----------|-------------|
-| next() | Move to next step |
-| prev() | Move to previous step |
-| skip() | Skip current step |
-| goToStep(step) | Jump directly |
-| finish() | Complete Wizard |
-| reset() | Reset Wizard |
-| setData() | Save Data |
-| getData() | Read Data |
-| getAllData() | Read Complete Data |
+```ts
+wizard.next()
 
----
+wizard.prev()
 
-## Built With
+wizard.skip()
 
-- Angular
-- TypeScript
-- Dynamic Components
-- Standalone Components
+wizard.goToStep(3)
 
----
+wizard.finish()
 
-## Roadmap
+wizard.reset()
 
-- Validation API
-- Lazy Loaded Steps
-- Async Step Support
-- Nested Wizards
-- Theme Packs
-- Drag & Drop Steps
+wizard.setData(key,value)
+
+wizard.getData(key)
+
+wizard.getAllData()
+
+wizard.currentStep()
+
+wizard.totalSteps()
+```
 
 ---
 
-## License
+# Store Data
 
-MIT License
+```ts
+this.wizard.setData('role','Student');
+```
+
+Retrieve later
+
+```ts
+const role=this.wizard.getData('role');
+```
+
+Retrieve everything
+
+```ts
+const data=this.wizard.getAllData();
+```
+
+---
+
+# Conditional Navigation
+
+Example:
+
+```ts
+if(role==='Student'){
+    this.wizard.goToStep(3);
+}
+else{
+    this.wizard.next();
+}
+```
+
+---
+
+# Skip Optional Step
+
+```ts
+this.wizard.skip();
+```
+
+---
+
+# Jump To Any Step
+
+```ts
+this.wizard.goToStep(5);
+```
+
+---
+
+# Finish Wizard
+
+```ts
+this.wizard.finish();
+```
+
+---
+
+# Reset Wizard
+
+```ts
+this.wizard.reset();
+```
+
+---
+
+# Inputs
+
+| Input | Description |
+|--------|-------------|
+| wizardTitle | Wizard Title |
+| wizardId | Unique Wizard Identifier |
+| dynamicSteps | Array of Wizard Steps |
+
+---
+
+# Outputs
+
+| Output | Description |
+|--------|-------------|
+| onComplete | Wizard Completed |
+| onStepChange | Step Changed |
+| closeWizardEmitter | Close Wizard |
+
+---
+
+# Advanced Examples
+
+✔ Student Registration
+
+✔ Product Configuration
+
+✔ Employee Onboarding
+
+✔ Course Enrollment
+
+✔ Loan Application
+
+✔ Checkout Wizard
+
+✔ Insurance Forms
+
+✔ Multi Page Forms
+
+✔ Survey Wizard
+
+✔ Dynamic Workflows
+
+---
+
+# Roadmap
+
+- [ ] Lazy Loaded Steps
+- [ ] Step Validation API
+- [ ] Async Navigation Guards
+- [ ] Theme Builder
+- [ ] Animation Presets
+- [ ] Mobile Stepper
+- [ ] Dark Mode
+- [ ] RTL Support
+- [ ] i18n
+
+---
+
+# Compatibility
+
+| Angular Version | Supported |
+|-----------------|-----------|
+| 20 | ✅ |
+| 21 | Planned |
+
+---
+
+# Contributing
+
+Contributions are welcome!
+
+Please open an Issue before submitting a Pull Request.
+
+---
+
+# License
+
+MIT
 
 ---
 
