@@ -120,16 +120,16 @@
 </div>
 
 <ng-template #stepperWizard>
-  <ng-stepper-wizard
+  <ngx-stepper-wizard
     [dynamicSteps]="productSteps"
     (closeWizardEmitter)="closeConnectionWizard()"
-  ></ng-stepper-wizard>
+  ></ngx-stepper-wizard>
 </ng-template>
 <ng-template #dynamicStepsRef>
-  <ng-stepper-wizard
+  <ngx-stepper-wizard
     [dynamicSteps]="dynamicSteps"
     (closeWizardEmitter)="closeConnectionWizard()"
     [wizardTitle]="'Register To Wizard'"
   >
-  </ng-stepper-wizard>
+  </ngx-stepper-wizard>
 </ng-template>
