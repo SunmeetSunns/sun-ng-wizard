@@ -25,7 +25,7 @@ import { FeatherModule } from 'angular-feather';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class CommonWizardComponent implements OnChanges, OnInit {
+export class NgStepperWizardComponent implements OnChanges, OnInit {
   @Input() wizardId: string = 'connection-wizard';
   @Input() wizardTitle: string = 'Create New Configuration';
   @Input() dynamicSteps: WizardInterface[] = [];

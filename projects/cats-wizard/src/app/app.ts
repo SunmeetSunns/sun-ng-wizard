@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CommonWizardComponent, WizardInterface } from 'angular-wizard';
+import { NgStepperWizardComponent, WizardInterface } from 'angular-wizard';
 import { SelectRole } from './dynamic-step/select-role/select-role';
 import { DummyComp1 } from './components/dummy-comp-1/dummy-comp-1';
 import { NgbModal, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,7 @@ import { FillForm } from './dynamic-step/fill-form/fill-form';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, CommonWizardComponent, SelectDepartment],
+  imports: [CommonModule, NgStepperWizardComponent, SelectDepartment],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
