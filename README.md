@@ -1,59 +1,140 @@
-# WizardMonorepo
+# Angular Wizard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+A reusable, standalone, highly customizable Angular Wizard Component for building modern multi-step workflows.
 
-## Development server
+<p align="center">
 
-To start a local development server, run:
+![Angular](https://img.shields.io/badge/Angular-15+-red)
 
-```bash
-ng serve
-```
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+![License](https://img.shields.io/npm/l/angular-wizard)
 
-## Code scaffolding
+![npm](https://img.shields.io/npm/v/angular-wizard)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+</p>
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## ✨ Features
 
-```bash
-ng generate --help
-```
+- 🚀 Standalone Angular Component
+- 📄 Single & Multi-Step Wizards
+- ⚡ Dynamic Step Rendering
+- ⏭ Skip Optional Steps
+- 🔀 Jump to Any Step
+- 💾 Shared Data Store
+- 📦 Dynamic Component Loading
+- 🎨 Fully Customizable UI
+- 📱 Responsive Layout
+- 🔄 Full Wizard Reset
+- 🖥 Full Screen Mode
+- 🎯 Event Driven API
+- 🧩 Bootstrap Compatible
 
-## Building
+---
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Installation
 
 ```bash
-ng test
+npm install angular-wizard
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Import
 
-```bash
-ng e2e
+```ts
+import {
+  CommonWizardComponent,
+  WizardInterface
+} from 'angular-wizard';
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## Basic Usage
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```html
+<acl-create-wizard
+  [wizardTitle]="'Student Registration'"
+  [dynamicSteps]="steps"
+  (onComplete)="submit()">
+</acl-create-wizard>
+```
+
+---
+
+## Configure Steps
+
+```ts
+steps: WizardInterface[] = [
+  {
+    title: 'Basic Details',
+    component: BasicDetailsComponent
+  },
+  {
+    title: 'Address',
+    component: AddressComponent
+  },
+  {
+    title: 'Review',
+    component: ReviewComponent
+  }
+];
+```
+
+---
+
+## Wizard Controller
+
+Every step automatically receives a Wizard Controller.
+
+```ts
+@Input()
+wizard!: WizardController;
+```
+
+Available Methods
+
+| Method | Description |
+|----------|-------------|
+| next() | Move to next step |
+| prev() | Move to previous step |
+| skip() | Skip current step |
+| goToStep(step) | Jump directly |
+| finish() | Complete Wizard |
+| reset() | Reset Wizard |
+| setData() | Save Data |
+| getData() | Read Data |
+| getAllData() | Read Complete Data |
+
+---
+
+## Built With
+
+- Angular
+- TypeScript
+- Dynamic Components
+- Standalone Components
+
+---
+
+## Roadmap
+
+- Validation API
+- Lazy Loaded Steps
+- Async Step Support
+- Nested Wizards
+- Theme Packs
+- Drag & Drop Steps
+
+---
+
+## License
+
+MIT License
+
+---
+
+Made with ❤️ by Sunmeet Kaur
