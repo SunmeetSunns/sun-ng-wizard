@@ -1,13 +1,41 @@
 {
-  "name": "angular-wizard",
-  "version": "0.0.1",
+  "name": "@sunmeet/ng-stepper-wizard",
+  "version": "1.0.0",
+  "description": "A lightweight, reusable and highly customizable Angular stepper wizard component with dynamic components, conditional navigation, shared state management and full workflow control.",
+  "author": {
+    "name": "Sunmeet Kaur",
+    "email": "sunmeet.codes@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/SunmeetSunns/sun-ng-wizard#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SunmeetSunns/sun-ng-wizard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SunmeetSunns/sun-ng-wizard/issues"
+  },
+  "keywords": [
+    "angular",
+    "angular-library",
+    "wizard",
+    "stepper",
+    "workflow",
+    "forms",
+    "dynamic-components",
+    "standalone",
+    "bootstrap",
+    "ui-components"
+  ],
   "peerDependencies": {
-    "@angular/common": "^20.3.0",
-    "@angular/core": "^20.3.0"
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^19.0.1",
+    "angular-feather": "^6.5.1",
+    "bootstrap": "^5.3.8"
   },
   "dependencies": {
-    "angular-feather": "^6.5.1",
-    "feather-icons": "^4.29.2",
     "tslib": "^2.3.0"
   },
   "sideEffects": false
