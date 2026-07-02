@@ -1,4 +1,4 @@
-# 🚀 @sunmeet/ng-stepper-wizard
+# 🚀 sun-ng-stepper-wizard
 
 A modern, lightweight and highly customizable **Angular Stepper Wizard** built with Standalone Components.
 
@@ -31,7 +31,7 @@ Create beautiful multi-step workflows with dynamic navigation, shared state mana
 Install the library.
 
 ```bash
-npm install @sunmeet/ng-stepper-wizard
+npm install sun-ng-stepper-wizard
 ```
 
 Install the required peer dependencies.
