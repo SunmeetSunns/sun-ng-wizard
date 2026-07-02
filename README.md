@@ -1,71 +1,92 @@
-# Angular Wizard
+# 🚀 @sunmeet/ng-stepper-wizard
 
-A reusable, standalone, highly customizable Angular Wizard Component for building modern multi-step workflows.
+A modern, lightweight and highly customizable **Angular Stepper Wizard** built with Standalone Components.
 
-<p align="center">
-
-![Angular](https://img.shields.io/badge/Angular-15+-red)
-
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-
-![License](https://img.shields.io/npm/l/angular-wizard)
-
-![npm](https://img.shields.io/npm/v/angular-wizard)
-
-</p>
+Create beautiful multi-step workflows with dynamic navigation, shared state management, conditional step rendering and a fully customizable UI.
 
 ---
 
 ## ✨ Features
 
-- 🚀 Standalone Angular Component
-- 📄 Single & Multi-Step Wizards
-- ⚡ Dynamic Step Rendering
-- ⏭ Skip Optional Steps
-- 🔀 Jump to Any Step
-- 💾 Shared Data Store
-- 📦 Dynamic Component Loading
-- 🎨 Fully Customizable UI
-- 📱 Responsive Layout
-- 🔄 Full Wizard Reset
-- 🖥 Full Screen Mode
-- 🎯 Event Driven API
-- 🧩 Bootstrap Compatible
+- ✅ Standalone Angular Component
+- ✅ Multi-Step Wizard
+- ✅ Single-Step Wizard
+- ✅ Dynamic Step Rendering
+- ✅ Conditional Navigation
+- ✅ Skip Optional Steps
+- ✅ Jump to Any Step
+- ✅ Previous / Next Navigation
+- ✅ Shared Data Store
+- ✅ Review & Submit Flow
+- ✅ Full Screen Mode
+- ✅ Customizable Theme
+- ✅ Responsive Design
+- ✅ Bootstrap Compatible
+- ✅ Angular 20+
 
 ---
 
-## Installation
+# 📦 Installation
+
+Install the library.
 
 ```bash
-npm install angular-wizard
+npm install @sunmeet/ng-stepper-wizard
+```
+
+Install the required peer dependencies.
+
+```bash
+npm install bootstrap angular-feather feather-icons
 ```
 
 ---
 
-## Import
+# 🎨 Configure Styles
+
+Add Bootstrap and the Wizard theme inside **angular.json**.
+
+```json
+{
+  "styles": [
+    "src/styles.scss",
+    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "node_modules/@sunmeet/ng-stepper-wizard/styles/wizard-theme.scss"
+  ]
+}
+```
+
+> **Note**
+>
+> `wizard-theme.scss` contains the default styles required for the wizard component.  
+> You can customize or override these styles in your own application if needed.
+
+---
+
+# 🚀 Import
 
 ```ts
 import {
   CommonWizardComponent,
   WizardInterface
-} from 'angular-wizard';
+} from '@sunmeet/ng-stepper-wizard';
 ```
 
 ---
 
-## Basic Usage
+# Basic Example
 
 ```html
-<acl-create-wizard
-  [wizardTitle]="'Student Registration'"
-  [dynamicSteps]="steps"
-  (onComplete)="submit()">
-</acl-create-wizard>
+<ng-stepper-wizard
+    wizardTitle="Student Registration"
+    [dynamicSteps]="steps"
+    (onComplete)="submit()">
+</ng-stepper-wizard>
 ```
 
 ---
 
-## Configure Steps
+# Create Steps
 
 ```ts
 steps: WizardInterface[] = [
@@ -74,8 +95,8 @@ steps: WizardInterface[] = [
     component: BasicDetailsComponent
   },
   {
-    title: 'Address',
-    component: AddressComponent
+    title: 'Department',
+    component: DepartmentComponent
   },
   {
     title: 'Review',
@@ -86,55 +107,185 @@ steps: WizardInterface[] = [
 
 ---
 
-## Wizard Controller
+# Wizard Controller
 
 Every step automatically receives a Wizard Controller.
 
 ```ts
 @Input()
-wizard!: WizardController;
+wizard!: any;
 ```
 
-Available Methods
+Available APIs
 
-| Method | Description |
-|----------|-------------|
-| next() | Move to next step |
-| prev() | Move to previous step |
-| skip() | Skip current step |
-| goToStep(step) | Jump directly |
-| finish() | Complete Wizard |
-| reset() | Reset Wizard |
-| setData() | Save Data |
-| getData() | Read Data |
-| getAllData() | Read Complete Data |
+```ts
+wizard.next();
 
----
+wizard.prev();
 
-## Built With
+wizard.skip();
 
-- Angular
-- TypeScript
-- Dynamic Components
-- Standalone Components
+wizard.goToStep(stepNumber);
 
----
+wizard.finish();
 
-## Roadmap
+wizard.reset();
 
-- Validation API
-- Lazy Loaded Steps
-- Async Step Support
-- Nested Wizards
-- Theme Packs
-- Drag & Drop Steps
+wizard.setData(key, value);
+
+wizard.getData(key);
+
+wizard.getAllData();
+
+wizard.currentStep();
+
+wizard.totalSteps();
+```
 
 ---
 
-## License
+# Store Shared Data
 
-MIT License
+```ts
+this.wizard.setData('role', 'Student');
+```
+
+Retrieve data
+
+```ts
+const role = this.wizard.getData('role');
+```
+
+Retrieve everything
+
+```ts
+const data = this.wizard.getAllData();
+```
 
 ---
 
-Made with ❤️ by Sunmeet Kaur
+# Conditional Navigation
+
+```ts
+if (role === 'Student') {
+    this.wizard.goToStep(3);
+} else {
+    this.wizard.next();
+}
+```
+
+---
+
+# Skip Current Step
+
+```ts
+this.wizard.skip();
+```
+
+---
+
+# Jump to Any Step
+
+```ts
+this.wizard.goToStep(5);
+```
+
+---
+
+# Finish Wizard
+
+```ts
+this.wizard.finish();
+```
+
+---
+
+# Reset Wizard
+
+```ts
+this.wizard.reset();
+```
+
+---
+
+# Inputs
+
+| Input | Type | Description |
+|--------|------|-------------|
+| wizardTitle | string | Wizard Title |
+| wizardId | string | Unique Wizard Identifier |
+| dynamicSteps | WizardInterface[] | Wizard Steps Configuration |
+
+---
+
+# Outputs
+
+| Output | Description |
+|---------|-------------|
+| onComplete | Fires when the wizard is completed |
+| onStepChange | Fires whenever the current step changes |
+| closeWizardEmitter | Closes the wizard |
+
+---
+
+# Example Use Cases
+
+- 🎓 Student Registration
+- 👨‍🏫 Teacher Onboarding
+- 👨‍💼 Employee Onboarding
+- 🛒 Product Configuration
+- 💳 Checkout Flow
+- 📋 Survey Wizard
+- 📝 Multi-page Forms
+- 🏦 Loan Application
+- 🩺 Healthcare Registration
+- 📦 Order Configuration
+
+---
+
+# Compatibility
+
+| Angular Version | Support |
+|-----------------|----------|
+| Angular 20 | ✅ Supported |
+| Angular 21 | Planned |
+
+---
+
+# Roadmap
+
+- [ ] Lazy Loaded Steps
+- [ ] Route-based Wizard
+- [ ] Step Validation API
+- [ ] Async Validation
+- [ ] Theme Builder
+- [ ] Dark Theme
+- [ ] RTL Support
+- [ ] Internationalization (i18n)
+- [ ] Custom Animations
+
+---
+
+# Contributing
+
+Contributions, issues and feature requests are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+---
+
+# License
+
+MIT License © 2026 Sunmeet Kaur
+
+---
+
+## ⭐ If you find this project useful, please consider giving it a star on GitHub!
+
+Made with ❤️ by Sunmeet Kaur.
