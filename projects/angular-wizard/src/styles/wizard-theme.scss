@@ -5,7 +5,7 @@
 @use '../scss/function' as *;
 @use '../scss/mixins' as *;
 @use '../scss/variable' as *;
-
+@use '../scss/button' as *;
 .test {
   margin: rem(32px);
   color: red;

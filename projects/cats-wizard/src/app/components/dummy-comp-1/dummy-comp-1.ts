@@ -12,7 +12,9 @@ export class DummyComp1 {
   constructor() {}
   @Input() contextId: string | undefined;
   wizardId: any = 'configure-product';
-  async processAndGoToNextStep(): Promise<void> {}
+
+  @Input() wizard!: any;
+
   methods = [
     {
       title: 'Select From Template',
@@ -27,10 +29,18 @@ export class DummyComp1 {
       disabled: false,
     },
   ];
-  goToPrevStep(): void {}
+  goToPrevStep() {
+    this.wizard.prev();
+  }
   selectMethod(index: number) {
     if (!this.methods[index].disabled) {
       this.selectedMethod = index;
     }
+  }
+  processAndGoToNextStep() {
+    this.wizard.skip();
+  }
+  skipStep() {
+    this.wizard.skip();
   }
 }

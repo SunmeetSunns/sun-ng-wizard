@@ -9,7 +9,7 @@ import {
   Type,
   SimpleChanges,
   ViewEncapsulation,
-  ChangeDetectorRef, // 1. Added for OnPush re-render safety
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { WizardInterface } from '../../wizard-interface';
 import { FeatherModule } from 'angular-feather';
 
 @Component({
-  selector: 'acl-create-wizard',
+  selector: 'ng-stepper-wizard',
   standalone: true,
   imports: [CommonModule, FormsModule, FeatherModule],
   templateUrl: './common-wizard.html',
@@ -34,6 +34,7 @@ export class CommonWizardComponent implements OnChanges, OnInit {
     currentStep: number;
     action: 'next' | 'prev' | 'skip';
   }>();
+
   @Output() onComplete = new EventEmitter<void>();
   @Output() closeWizardEmitter = new EventEmitter<string>();
 
@@ -41,7 +42,12 @@ export class CommonWizardComponent implements OnChanges, OnInit {
   stepsInternalConfig: any[] = [];
   isFullScreen = false;
 
-  // 2. Inject ChangeDetectorRef for explicit Push cycles
+  /**
+   * Shared Wizard Data Store
+   * Persists data even when components are destroyed/recreated
+   */
+  private wizardData: Record<string, any> = {};
+
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -56,11 +62,14 @@ export class CommonWizardComponent implements OnChanges, OnInit {
 
   private initWizardEngine(): void {
     if (!this.dynamicSteps.length) return;
+
     this.activeStepNumber = 1;
+
     this.stepsInternalConfig = this.dynamicSteps.map((s, i) => ({
       title: s.title,
       state: i === 0 ? 'active' : 'normal',
     }));
+
     this.cdr.markForCheck();
   }
 
@@ -72,33 +81,80 @@ export class CommonWizardComponent implements OnChanges, OnInit {
     return this.dynamicSteps[this.activeStepNumber - 1];
   }
 
-  closeWizard(from: string = '') {
+  closeWizard(from: string = ''): void {
     this.closeWizardEmitter.emit(from);
+  }
+
+  /**
+   * Wizard Controller exposed to all step components
+   */
+  private getWizardController() {
+    return {
+      next: () => this.moveToNextStep(),
+
+      prev: () => this.moveToPreviousStep(),
+
+      skip: () => this.skipCurrentStep(),
+
+      goToStep: (step: number) => this.goToStep(step),
+
+      finish: () => this.onComplete.emit(),
+
+      reset: () => this.resetWizard(),
+
+      setData: (key: string, value: any) => {
+        this.wizardData[key] = value;
+      },
+
+      getData: (key: string) => {
+        return this.wizardData[key];
+      },
+
+      getAllData: () => {
+        return { ...this.wizardData };
+      },
+
+      currentStep: () => this.activeStepNumber,
+
+      totalSteps: () => this.dynamicSteps.length,
+    };
   }
 
   getComponentInputs(): { [key: string]: any } {
     const config = this.currentStepConfig;
-    if (!config) return {};
 
     return {
       contextId: this.wizardId,
-      isSkippable: config.isSkippable ?? false,
-      onStepComplete: () => this.moveToNextStep(),
-      onStepSkip: () => this.skipCurrentStep(),
-      ...(config.data || {}),
+
+      wizard: this.getWizardController(),
+
+      ...(config?.data || {}),
     };
   }
 
   moveToNextStep(): void {
     if (this.activeStepNumber < this.dynamicSteps.length) {
-      // Reference modification fix for OnPush view synchronization
       const clone = [...this.stepsInternalConfig];
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'done' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'done',
+      };
+
       this.activeStepNumber++;
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'active' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'active',
+      };
 
       this.stepsInternalConfig = clone;
-      this.onStepChange.emit({ currentStep: this.activeStepNumber, action: 'next' });
+
+      this.onStepChange.emit({
+        currentStep: this.activeStepNumber,
+        action: 'next',
+      });
+
       this.cdr.markForCheck();
     } else {
       this.onComplete.emit();
@@ -108,12 +164,26 @@ export class CommonWizardComponent implements OnChanges, OnInit {
   skipCurrentStep(): void {
     if (this.activeStepNumber < this.dynamicSteps.length) {
       const clone = [...this.stepsInternalConfig];
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'skipped' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'skipped',
+      };
+
       this.activeStepNumber++;
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'active' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'active',
+      };
 
       this.stepsInternalConfig = clone;
-      this.onStepChange.emit({ currentStep: this.activeStepNumber, action: 'skip' });
+
+      this.onStepChange.emit({
+        currentStep: this.activeStepNumber,
+        action: 'skip',
+      });
+
       this.cdr.markForCheck();
     }
   }
@@ -121,18 +191,72 @@ export class CommonWizardComponent implements OnChanges, OnInit {
   moveToPreviousStep(): void {
     if (this.activeStepNumber > 1) {
       const clone = [...this.stepsInternalConfig];
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'normal' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'normal',
+      };
+
       this.activeStepNumber--;
-      clone[this.activeStepNumber - 1] = { ...clone[this.activeStepNumber - 1], state: 'active' };
+
+      clone[this.activeStepNumber - 1] = {
+        ...clone[this.activeStepNumber - 1],
+        state: 'active',
+      };
 
       this.stepsInternalConfig = clone;
-      this.onStepChange.emit({ currentStep: this.activeStepNumber, action: 'prev' });
+
+      this.onStepChange.emit({
+        currentStep: this.activeStepNumber,
+        action: 'prev',
+      });
+
       this.cdr.markForCheck();
     }
   }
 
-  toggleFullScreen() {
+  /**
+   * Jump directly to any step
+   */
+  goToStep(step: number): void {
+    if (step < 1 || step > this.dynamicSteps.length || step === this.activeStepNumber) {
+      return;
+    }
+
+    const clone = [...this.stepsInternalConfig];
+
+    clone.forEach((item, index) => {
+      if (index === step - 1) {
+        item.state = 'active';
+      } else if (index < step - 1) {
+        item.state = 'done';
+      } else {
+        item.state = 'normal';
+      }
+    });
+
+    this.activeStepNumber = step;
+    this.stepsInternalConfig = clone;
+
+    this.onStepChange.emit({
+      currentStep: this.activeStepNumber,
+      action: 'next',
+    });
+
+    this.cdr.markForCheck();
+  }
+
+  /**
+   * Reset entire wizard
+   */
+  resetWizard(): void {
+    this.wizardData = {};
+    this.initWizardEngine();
+  }
+
+  toggleFullScreen(): void {
     this.isFullScreen = !this.isFullScreen;
+
     const modals = document.querySelectorAll('.modal.show');
     const currentModal = modals[modals.length - 1] as HTMLElement;
 
@@ -145,6 +269,7 @@ export class CommonWizardComponent implements OnChanges, OnInit {
         document.body.style.overflow = 'auto';
       }
     }
+
     this.cdr.markForCheck();
   }
 }

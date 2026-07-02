@@ -1,6 +1,135 @@
-<div class="sunmeet">Hiii</div>
-<div class="largeModel modal-dialog">
-  <div class="modal-content">
-    <acl-create-wizard [dynamicSteps]="productSteps"></acl-create-wizard>
+<div class="page-header">
+  <span class="badge">Wizard Library Showcase</span>
+
+  <h1>Explore Our Wizard Examples</h1>
+
+  <p>Powerful, flexible and customizable wizards for every use case.</p>
+</div>
+
+<div class="grid-wrapper">
+  <div class="grid-box" (click)="openWizard(stepperWizard)">
+    <div class="icon blue">📄</div>
+    <h3>Single Step Wizard</h3>
+    <p>One simple step to get the job done quickly.</p>
+
+    <div class="card-preview">
+      <div class="line"></div>
+      <div class="line short"></div>
+      <button>Submit</button>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon green">🧩</div>
+    <h3>Multi Step Wizard</h3>
+    <p>Guide users through multiple sequential steps.</p>
+
+    <div class="card-preview">
+      <div class="steps">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon purple">⚡</div>
+    <h3>Dynamic Step Wizard</h3>
+    <p>Steps change dynamically based on user input.</p>
+
+    <div class="card-preview dashed">+ Add Step</div>
+
+    <span class="demo-btn" (click)="openWizard(dynamicStepsRef)">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon orange">⏭️</div>
+    <h3>Skippable Step Wizard</h3>
+    <p>Allow users to skip optional steps easily.</p>
+
+    <div class="card-preview">
+      <button class="skip-btn">Skip</button>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon pink">🔀</div>
+    <h3>Conditional Flow Wizard</h3>
+    <p>Show different paths based on user choices.</p>
+
+    <div class="card-preview flow">
+      <div class="flow-node"></div>
+      <div class="flow-line"></div>
+      <div class="flow-actions">
+        <span>A</span>
+        <span>B</span>
+      </div>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon cyan">💾</div>
+    <h3>Data Persistence Wizard</h3>
+    <p>Save and restore data across wizard steps.</p>
+
+    <div class="card-preview">
+      <div class="saved-tag">✓ Saved</div>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon yellow">📋</div>
+    <h3>Review & Submit Wizard</h3>
+    <p>Review all information before final submission.</p>
+
+    <div class="card-preview">
+      <ul>
+        <li>✓ Details</li>
+        <li>✓ Configuration</li>
+        <li>✓ Review</li>
+      </ul>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
+  </div>
+
+  <div class="grid-box">
+    <div class="icon dark">🎨</div>
+    <h3>Custom Theme Wizard</h3>
+    <p>Fully customizable themes to match your brand.</p>
+
+    <div class="card-preview dark-preview">
+      <div class="dark-line"></div>
+      <div class="dark-line short"></div>
+    </div>
+
+    <span class="demo-btn">View Demo →</span>
   </div>
 </div>
+
+<ng-template #stepperWizard>
+  <ng-stepper-wizard
+    [dynamicSteps]="productSteps"
+    (closeWizardEmitter)="closeConnectionWizard()"
+  ></ng-stepper-wizard>
+</ng-template>
+<ng-template #dynamicStepsRef>
+  <ng-stepper-wizard
+    [dynamicSteps]="dynamicSteps"
+    (closeWizardEmitter)="closeConnectionWizard()"
+    [wizardTitle]="'Register To Wizard'"
+  >
+  </ng-stepper-wizard>
+</ng-template>

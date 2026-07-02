@@ -1,0 +1,62 @@
+@use '../../../../../../dist/angular-wizard/scss/index' as *;
+
+.custom_model_body {
+  height: calc(100vh - rem(250px));
+  overflow: auto;
+}
+.myForm {
+  @include flex(space-between, center, '', column);
+
+  .feature {
+    padding-top: rem(24px);
+    width: 65%;
+
+    @include flex(center, center, rem(24px), row);
+
+    .create_manually {
+      @include flex('', flex-start, '', column);
+      max-width: rem(274px);
+
+      &.disabled {
+        opacity: 0.4;
+      }
+
+      .module {
+        @include box(rem(274px), rem(175px));
+        @include flex(center, center, '');
+        border: rem(2px) solid var(--blue-300);
+        border-radius: rem(8px);
+        position: relative;
+        cursor: pointer;
+
+        &.active {
+          border: rem(3px) solid var(--blue-600);
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .check_icon {
+          @include box(rem(34px), rem(34px));
+          position: absolute;
+          top: rem(-13px);
+          right: rem(-16px);
+        }
+
+        img {
+          @include box(rem(68px), rem(68px));
+        }
+      }
+
+      .head {
+        @include fontStyle(var(--fs-18), rem(24px), 600);
+        color: var(--neutral-500);
+        margin-top: rem(16px);
+      }
+      .manual_text {
+        @include fontStyle(var(--fs-14), rem(22px), 400);
+        color: var(--neutral-500);
+        margin-top: rem(8px);
+      }
+    }
+  }
+}

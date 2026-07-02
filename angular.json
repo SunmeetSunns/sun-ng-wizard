@@ -54,7 +54,7 @@
             ],
             "styles": [
               "projects/cats-wizard/src/styles.scss",
-
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "dist/angular-wizard/styles/wizard-theme.scss"
             ]
           },
@@ -110,7 +110,7 @@
             ],
             "styles": [
               "projects/cats-wizard/src/styles.scss",
-
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "dist/angular-wizard/styles/wizard-theme.scss"
             ]
           }

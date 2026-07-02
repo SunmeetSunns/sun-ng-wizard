@@ -1,0 +1,256 @@
+@use '../../../../../../dist/angular-wizard/scss/index' as *;
+
+// .custom_model_body {
+//   height: calc(100vh - rem(250px));
+//   overflow: auto;
+// }
+.myForm {
+  @include flex(space-between, center, '', column);
+
+  .border_alignment {
+    border-bottom: rem(1px) solid var(--neutral-200);
+    margin: rem(16px) 0px;
+    width: 100%;
+  }
+
+  form {
+    width: 48.558%;
+    height: calc(100vh - rem(381px));
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .flex_start {
+    align-items: flex-start;
+  }
+
+  .mt_15px {
+    margin-top: rem(15px);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: rem(140px);
+  }
+}
+
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  border: rem(1px) solid var(--neutral-300);
+  border-radius: rem(8px);
+  background-color: var(--white);
+  margin: 0;
+  height: rem(56px);
+
+  .file-label {
+    background-color: var(--neutral-50);
+    padding: rem(5px) rem(15px);
+    border: none;
+    border-top-left-radius: rem(8px);
+    border-bottom-left-radius: rem(8px);
+    cursor: pointer;
+    margin-right: rem(10px);
+    align-items: center;
+    display: flex;
+    height: 100%;
+    @include fontStyle(var(--fs-20), rem(24px), 400);
+    color: var(--neutral-500);
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
+  .file-text {
+    @include fontStyle(var(--fs-20), rem(24px), 400);
+    color: var(--neutral-600);
+    cursor: pointer;
+  }
+
+  .file-placeholder {
+    color: var(--light-grey);
+    @include fontStyle(var(--fs-20), rem(24px), 400);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: rem(346px);
+  }
+}
+.relative {
+  position: relative;
+
+  .base_price {
+    @include box(100%, '');
+    border-radius: rem(8px);
+    border: rem(1px) solid var(--neutral-300);
+    @include flex();
+
+    .left {
+      @include flex('', center, rem(8px));
+      @include box(rem(139px), rem(54px));
+      background-color: var(--blue-50);
+      padding: 0px rem(18px);
+      border-radius: rem(7px);
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      cursor: pointer;
+
+      .country_name {
+        @include fontStyle(var(--fs-20), rem(24px), 400);
+        color: var(--neutral-500);
+      }
+
+      img {
+        @include box(rem(24px), rem(24px));
+      }
+
+      i-feather {
+        @include box(rem(24px), rem(24px));
+        @include flex();
+      }
+    }
+
+    .price {
+      width: 78%;
+
+      input {
+        width: 100%;
+
+        border: 0;
+        height: rem(54px);
+      }
+    }
+  }
+}
+
+.row_div {
+  padding-right: rem(4px);
+}
+
+.h_56 {
+  height: rem(56px);
+  margin-bottom: rem(16px);
+  @include flex('', center);
+}
+
+.info_icon {
+  @include box(rem(18px), rem(18px));
+  color: var(--neutral-500);
+  margin-left: rem(4px);
+}
+
+.switch_wrapper {
+  @include flex('', center, rem(16px));
+
+  .label {
+    color: var(--blue-900);
+    @include fontStyle(var(--fs-20), rem(24px));
+  }
+}
+.switch_section {
+  position: relative;
+  @include box(rem(44px), rem(24px));
+}
+
+.switch input {
+  opacity: 0;
+  @include box(0, 0);
+}
+
+.switch input:focus {
+  box-shadow: unset;
+}
+
+.slider {
+  position: absolute;
+  background-color: #e6e7e8;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  @include box(rem(20px), rem(20px));
+  position: absolute;
+  content: '';
+  left: rem(4px);
+  bottom: rem(4px);
+  background-color: var(--white);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  position: absolute;
+  left: rem(3px);
+  bottom: rem(2px);
+  box-shadow: 0 rem(1px) rem(2px) 0 var(--box-shadow);
+}
+
+input:checked + .slider {
+  background-color: var(--blue-600);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 rem(1px) var(--blue-600);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(rem(26px));
+  -ms-transform: translateX(rem(26px));
+  transform: translateX(rem(26px));
+  left: rem(-5px);
+  bottom: rem(2px);
+}
+
+.slider.round {
+  border-radius: rem(12px);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.show_box {
+  position: relative;
+
+  &:hover .custom_tooltip_section {
+    @include flex(center, '', '', column);
+  }
+
+  .custom_tooltip_section {
+    min-width: rem(320px);
+    min-height: rem(82px);
+    background-color: var(--neutral-500);
+    position: absolute;
+    z-index: 10;
+    left: rem(28px);
+    top: rem(-34px);
+    padding: rem(12px);
+    border-radius: rem(8px);
+    display: none;
+
+    .arrow {
+      position: absolute;
+      @include box(rem(12px), rem(12px));
+      background-color: var(--neutral-500);
+      transform: rotate(44deg);
+      top: rem(36px);
+      left: rem(-5px);
+    }
+
+    .user_sync_head {
+      color: var(--white);
+      @include fontStyle(var(--fs-12), rem(18px), 600);
+      margin-bottom: rem(4px);
+    }
+
+    .user_sync_txt {
+      color: var(--white);
+      @include fontStyle(var(--fs-12), rem(18px));
+    }
+  }
+}
