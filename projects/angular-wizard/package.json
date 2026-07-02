@@ -1,6 +1,6 @@
 {
   "name": "sun-ng-stepper-wizard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight, reusable and highly customizable Angular stepper wizard component with dynamic components, conditional navigation, shared state management and full workflow control.",
   "author": {
     "name": "Sunmeet Kaur",

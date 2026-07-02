@@ -1,63 +1,289 @@
-# AngularWizard
+# 🚀 sun-ng-stepper-wizard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.0.
+A modern, lightweight and highly customizable **Angular Stepper Wizard** built with Standalone Components.
 
-## Code scaffolding
+Create beautiful multi-step workflows with dynamic navigation, shared state management, conditional step rendering and a fully customizable UI.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## ✨ Features
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- ✅ Standalone Angular Component
+- ✅ Multi-Step Wizard
+- ✅ Single-Step Wizard
+- ✅ Dynamic Step Rendering
+- ✅ Conditional Navigation
+- ✅ Skip Optional Steps
+- ✅ Jump to Any Step
+- ✅ Previous / Next Navigation
+- ✅ Shared Data Store
+- ✅ Review & Submit Flow
+- ✅ Full Screen Mode
+- ✅ Customizable Theme
+- ✅ Responsive Design
+- ✅ Bootstrap Compatible
+- ✅ Angular 20+
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+# 📦 Installation
 
-To build the library, run:
-
-```bash
-ng build angular-wizard
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/angular-wizard
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Install the library.
 
 ```bash
-ng test
+npm install sun-ng-stepper-wizard
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Install the required peer dependencies.
 
 ```bash
-ng e2e
+npm install bootstrap angular-feather feather-icons
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+# 🎨 Configure Styles
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Add Bootstrap and the Wizard theme inside **angular.json**.
+
+```json
+{
+  "styles": [
+    "src/styles.scss",
+    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "node_modules/@sunmeet/ng-stepper-wizard/styles/wizard-theme.scss"
+  ]
+}
+```
+
+> **Note**
+>
+> `wizard-theme.scss` contains the default styles required for the wizard component.  
+> You can customize or override these styles in your own application if needed.
+
+---
+
+# 🚀 Import
+
+```ts
+import { CommonWizardComponent, WizardInterface } from '@sunmeet/ng-stepper-wizard';
+```
+
+---
+
+# Basic Example
+
+```html
+<ng-stepper-wizard
+  wizardTitle="Student Registration"
+  [dynamicSteps]="steps"
+  (onComplete)="submit()"
+>
+</ng-stepper-wizard>
+```
+
+---
+
+# Create Steps
+
+```ts
+steps: WizardInterface[] = [
+  {
+    title: 'Basic Details',
+    component: BasicDetailsComponent
+  },
+  {
+    title: 'Department',
+    component: DepartmentComponent
+  },
+  {
+    title: 'Review',
+    component: ReviewComponent
+  }
+];
+```
+
+---
+
+# Wizard Controller
+
+Every step automatically receives a Wizard Controller.
+
+```ts
+@Input()
+wizard!: any;
+```
+
+Available APIs
+
+```ts
+wizard.next();
+
+wizard.prev();
+
+wizard.skip();
+
+wizard.goToStep(stepNumber);
+
+wizard.finish();
+
+wizard.reset();
+
+wizard.setData(key, value);
+
+wizard.getData(key);
+
+wizard.getAllData();
+
+wizard.currentStep();
+
+wizard.totalSteps();
+```
+
+---
+
+# Store Shared Data
+
+```ts
+this.wizard.setData('role', 'Student');
+```
+
+Retrieve data
+
+```ts
+const role = this.wizard.getData('role');
+```
+
+Retrieve everything
+
+```ts
+const data = this.wizard.getAllData();
+```
+
+---
+
+# Conditional Navigation
+
+```ts
+if (role === 'Student') {
+  this.wizard.goToStep(3);
+} else {
+  this.wizard.next();
+}
+```
+
+---
+
+# Skip Current Step
+
+```ts
+this.wizard.skip();
+```
+
+---
+
+# Jump to Any Step
+
+```ts
+this.wizard.goToStep(5);
+```
+
+---
+
+# Finish Wizard
+
+```ts
+this.wizard.finish();
+```
+
+---
+
+# Reset Wizard
+
+```ts
+this.wizard.reset();
+```
+
+---
+
+# Inputs
+
+| Input        | Type              | Description                |
+| ------------ | ----------------- | -------------------------- |
+| wizardTitle  | string            | Wizard Title               |
+| wizardId     | string            | Unique Wizard Identifier   |
+| dynamicSteps | WizardInterface[] | Wizard Steps Configuration |
+
+---
+
+# Outputs
+
+| Output             | Description                             |
+| ------------------ | --------------------------------------- |
+| onComplete         | Fires when the wizard is completed      |
+| onStepChange       | Fires whenever the current step changes |
+| closeWizardEmitter | Closes the wizard                       |
+
+---
+
+# Example Use Cases
+
+- 🎓 Student Registration
+- 👨‍🏫 Teacher Onboarding
+- 👨‍💼 Employee Onboarding
+- 🛒 Product Configuration
+- 💳 Checkout Flow
+- 📋 Survey Wizard
+- 📝 Multi-page Forms
+- 🏦 Loan Application
+- 🩺 Healthcare Registration
+- 📦 Order Configuration
+
+---
+
+# Compatibility
+
+| Angular Version | Support      |
+| --------------- | ------------ |
+| Angular 20      | ✅ Supported |
+| Angular 21      | Planned      |
+
+---
+
+# Roadmap
+
+- [ ] Lazy Loaded Steps
+- [ ] Route-based Wizard
+- [ ] Step Validation API
+- [ ] Async Validation
+- [ ] Theme Builder
+- [ ] Dark Theme
+- [ ] RTL Support
+- [ ] Internationalization (i18n)
+- [ ] Custom Animations
+
+---
+
+# Contributing
+
+Contributions, issues and feature requests are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+---
+
+# License
+
+MIT License © 2026 Sunmeet Kaur
+
+---
+
+## ⭐ If you find this project useful, please consider giving it a star on GitHub!
+
+Made with ❤️ by Sunmeet Kaur.
