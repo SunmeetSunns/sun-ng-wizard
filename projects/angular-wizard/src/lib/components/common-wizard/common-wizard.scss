@@ -26,9 +26,11 @@ i-feather {
 // Small ModelSectio End Here
 
 // --------------------------- CUSTOM-MODEL
-.largeModel.modal-dialog {
-  max-width: max(810px, 90%);
-  height: calc(100vh - rem(96px));
+.ngx-stepper-modal.modal-dialog {
+  width: var(--wizard-width, 90%);
+  max-width: var(--wizard-max-width, 900px);
+  height: var(--wizard-height, calc(100vh - 96px));
+
   margin: auto;
   margin: rem(80px) auto rem(16px) auto;
   display: flex;

@@ -9,19 +9,19 @@ Create beautiful multi-step workflows with dynamic navigation, shared state mana
 ## ✨ Features
 
 - ✅ Standalone Angular Component
-- ✅ Multi-Step Wizard
-- ✅ Single-Step Wizard
+- ✅ Dynamic Multi-Step Wizard
+- ✅ Single-Step Wizard Support
 - ✅ Dynamic Step Rendering
-- ✅ Conditional Navigation
+- ✅ Shared Wizard State
+- ✅ Previous / Next Navigation
 - ✅ Skip Optional Steps
 - ✅ Jump to Any Step
-- ✅ Previous / Next Navigation
-- ✅ Shared Data Store
 - ✅ Review & Submit Flow
 - ✅ Full Screen Mode
-- ✅ Customizable Theme
-- ✅ Responsive Design
+- ✅ Dynamic Modal Width & Height
+- ✅ Minimum Modal Size Protection
 - ✅ Bootstrap Compatible
+- ✅ Responsive Design
 - ✅ Angular 20+
 
 ---
@@ -66,7 +66,7 @@ Add Bootstrap and the Wizard theme inside **angular.json**.
 # 🚀 Import
 
 ```ts
-import { CommonWizardComponent, WizardInterface } from '@sunmeet/ng-stepper-wizard';
+import { NgxStepperWizardComponent, WizardInterface } from 'ngx-stepper-wizard';
 ```
 
 ---
@@ -74,13 +74,47 @@ import { CommonWizardComponent, WizardInterface } from '@sunmeet/ng-stepper-wiza
 # Basic Example
 
 ```html
-<ng-stepper-wizard
-  wizardTitle="Student Registration"
-  [dynamicSteps]="steps"
-  (onComplete)="submit()"
->
-</ng-stepper-wizard>
+<ng-template #wizardModal>
+  <ngx-stepper-wizard
+    wizardTitle="Student Registration"
+    [dynamicSteps]="steps"
+    [width]="1200"
+    [maxWidth]="'90vw'"
+    [height]="'80vh'"
+    (onComplete)="submit()"
+    (closeWizardEmitter)="closeWizard()"
+  >
+  </ngx-stepper-wizard>
+</ng-template>
 ```
+
+---
+
+---
+
+# 📐 Modal Size
+
+The wizard allows you to customize the modal dimensions.
+
+```html
+<ngx-stepper-wizard [width]="1200" [maxWidth]="'90vw'" [height]="'80vh'"> </ngx-stepper-wizard>
+```
+
+### Supported Values
+
+```html
+[width]="1200" [width]="'70%'" [width]="'80vw'" [maxWidth]="'1100px'" [height]="700"
+[height]="'75vh'"
+```
+
+> **Note**
+>
+> The wizard enforces a minimum supported modal size of:
+>
+> - **Width:** `810px`
+> - **Height:** `500px`
+>
+> Values smaller than these limits are automatically adjusted to ensure the wizard layout remains fully functional.
 
 ---
 

@@ -1,20 +1,21 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
-  Type,
   SimpleChanges,
+  Type,
   ViewEncapsulation,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WizardInterface } from '../../wizard-interface';
 import { FeatherModule } from 'angular-feather';
+import { WizardInterface } from '../../wizard-interface';
 
 export interface WizardState {
   title: string;
@@ -27,13 +28,22 @@ export interface WizardState {
   imports: [CommonModule, FormsModule, FeatherModule],
   templateUrl: './common-wizard.html',
   styleUrl: './common-wizard.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxStepperWizardComponent implements OnInit, OnChanges {
-  @Input() wizardId: string = 'ngx-stepper-wizard';
-  @Input() wizardTitle: string = 'Create New Configuration';
+export class NgxStepperWizardComponent implements OnInit, OnChanges, AfterViewInit {
+  @Input() wizardId = 'ngx-stepper-wizard';
+  @Input() wizardTitle = 'Create New Configuration';
   @Input() dynamicSteps: WizardInterface[] = [];
+
+  /** Modal Size */
+  @Input() width: string | number = '90%';
+  @Input() maxWidth: string | number = '900px';
+  @Input() height: string | number = 'calc(100vh - 96px)';
+
+  /** Minimum supported size */
+  private readonly MIN_WIDTH = 810;
+  private readonly MIN_HEIGHT = 500;
 
   @Output() onStepChange = new EventEmitter<{
     currentStep: number;
@@ -55,10 +65,74 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
     this.initWizard();
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => this.applyModalSize());
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dynamicSteps'] && !changes['dynamicSteps'].isFirstChange()) {
+    if (changes['dynamicSteps'] && !changes['dynamicSteps'].firstChange) {
       this.initWizard();
     }
+
+    if (changes['width'] || changes['maxWidth'] || changes['height']) {
+      setTimeout(() => this.applyModalSize());
+    }
+  }
+
+  /**
+   * Converts input into css value
+   */
+  private cssValue(value: string | number): string {
+    return typeof value === 'number' ? `${value}px` : value;
+  }
+
+  /**
+   * Enforce minimum width
+   */
+  private getWidth(): string {
+    if (typeof this.width === 'number') {
+      return `${Math.max(this.width, this.MIN_WIDTH)}px`;
+    }
+
+    return this.width;
+  }
+
+  /**
+   * Enforce minimum height
+   */
+  private getHeight(): string {
+    if (typeof this.height === 'number') {
+      return `${Math.max(this.height, this.MIN_HEIGHT)}px`;
+    }
+
+    return this.height;
+  }
+
+  /**
+   * Apply modal dimensions
+   */
+  private applyModalSize(): void {
+    const modal = document.querySelector('.modal.show .modal-dialog') as HTMLElement;
+
+    if (!modal) return;
+
+    modal.classList.add('ngx-stepper-modal');
+
+    if (this.isFullScreen) {
+      modal.style.width = '100vw';
+      modal.style.maxWidth = '100vw';
+      modal.style.height = '100vh';
+      modal.style.minWidth = '100vw';
+      modal.style.minHeight = '100vh';
+      return;
+    }
+
+    modal.style.width = this.getWidth();
+    modal.style.maxWidth = this.cssValue(this.maxWidth);
+    modal.style.height = this.getHeight();
+
+    modal.style.minWidth = `${this.MIN_WIDTH}px`;
+    modal.style.minHeight = `${this.MIN_HEIGHT}px`;
   }
 
   private initWizard(): void {
@@ -66,8 +140,8 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
 
     this.activeStepNumber = 1;
 
-    this.stepsInternalConfig = this.dynamicSteps.map((_, i) => ({
-      title: this.dynamicSteps[i].title,
+    this.stepsInternalConfig = this.dynamicSteps.map((step, i) => ({
+      title: step.title,
       state: i === 0 ? 'active' : 'normal',
     }));
 
@@ -82,13 +156,12 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
     return this.dynamicSteps[this.activeStepNumber - 1];
   }
 
-  closeWizard(source: string = ''): void {
+  closeWizard(source = ''): void {
     this.closeWizardEmitter.emit(source);
   }
 
-  // ===============================
-  // Wizard Controller
-  // ===============================
+  // ---------------- Wizard Controller ----------------
+
   private getWizardController() {
     return {
       next: () => this.moveToNextStep(),
@@ -100,9 +173,7 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
 
       reset: () => this.resetWizard(),
 
-      setData: (key: string, value: any) => {
-        this.wizardData[key] = value;
-      },
+      setData: (key: string, value: any) => (this.wizardData[key] = value),
 
       getData: (key: string) => this.wizardData[key],
 
@@ -121,10 +192,6 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
       ...(this.currentStepConfig?.data || {}),
     };
   }
-
-  // ===============================
-  // Navigation
-  // ===============================
 
   moveToNextStep(): void {
     if (this.activeStepNumber >= this.dynamicSteps.length) {
@@ -160,7 +227,9 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
   }
 
   goToStep(step: number): void {
-    if (step < 1 || step > this.dynamicSteps.length || step === this.activeStepNumber) return;
+    if (step < 1 || step > this.dynamicSteps.length || step === this.activeStepNumber) {
+      return;
+    }
 
     this.stepsInternalConfig = this.stepsInternalConfig.map((item, i) => ({
       ...item,
@@ -169,22 +238,13 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
 
     this.activeStepNumber = step;
 
-    this.onStepChange.emit({
-      currentStep: this.activeStepNumber,
-      action: 'goto',
-    });
-
-    this.cdr.markForCheck();
+    this.emitStepChange('goto');
   }
 
   resetWizard(): void {
     this.wizardData = {};
     this.initWizard();
   }
-
-  // ===============================
-  // Helpers
-  // ===============================
 
   private updateStepState(stepIndex: number, state: WizardState['state']): void {
     const clone = [...this.stepsInternalConfig];
@@ -195,6 +255,7 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
     };
 
     this.stepsInternalConfig = clone;
+
     this.cdr.markForCheck();
   }
 
@@ -207,20 +268,16 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges {
     this.cdr.markForCheck();
   }
 
-  // ===============================
-  // UI
-  // ===============================
-
   toggleFullScreen(): void {
     this.isFullScreen = !this.isFullScreen;
 
-    const modals = document.querySelectorAll('.modal.show');
-    const currentModal = modals[modals.length - 1] as HTMLElement;
+    const modal = document.querySelector('.modal.show');
 
-    if (currentModal) {
-      currentModal.classList.toggle('fullscreen-modal', this.isFullScreen);
-      document.body.style.overflow = this.isFullScreen ? 'hidden' : 'auto';
-    }
+    modal?.classList.toggle('fullscreen-modal', this.isFullScreen);
+
+    document.body.style.overflow = this.isFullScreen ? 'hidden' : '';
+
+    this.applyModalSize(); // <-- add this
 
     this.cdr.markForCheck();
   }

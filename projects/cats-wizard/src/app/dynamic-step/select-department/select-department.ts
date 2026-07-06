@@ -58,11 +58,6 @@ export class SelectDepartment {
   processAndGoToNextStep() {
     this.wizard.setData('selectedRole', this.methods[this.selectedMethod]);
 
-    if (this.selectedMethod === 0) {
-      this.wizard.goToStep(3);
-    }
-    if (this.selectedMethod === 1) {
-      this.wizard.next();
-    }
+    this.wizard.next();
   }
 }

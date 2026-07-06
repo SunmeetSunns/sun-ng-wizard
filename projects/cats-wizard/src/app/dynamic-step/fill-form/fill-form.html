@@ -7,94 +7,69 @@
     <form [formGroup]="form">
       <div class="row_div">
         <div class="col_div">
-          <label><span>Product Name</span><sup>*</sup></label>
+          <label><span>Name</span><sup>*</sup></label>
         </div>
         <div class="col_div w-100">
           <input
             type="text"
-            placeholder="Enter Product Name"
-            formControlName="productName"
+            placeholder="Enter Name"
+            formControlName="name"
             [ngClass]="{
-              'border-danger': form.get('productName')?.touched && form.get('productName')?.invalid,
+              'border-danger': form.get('name')?.touched && form.get('name')?.invalid,
             }"
           />
-          @if (
-            form.get('productName')?.touched && form.get('productName')?.hasError('whitespace')
-          ) {
+          @if (form.get('name')?.touched && form.get('name')?.hasError('whitespace')) {
             <div class="error">Product name cannot be empty or contain only spaces.</div>
           }
-          @if (form.get('productName')?.hasError('minlength')) {
+          @if (form.get('name')?.hasError('minlength')) {
             <div class="error">Minimum 3 characters required</div>
           }
-          @if (form.get('productName')?.hasError('maxlength')) {
+          @if (form.get('name')?.hasError('maxlength')) {
             <div class="error">Maximum 50 characters required</div>
           }
         </div>
       </div>
+      <div class="row_div">
+        <label>Email <sup class="error">*</sup> </label>
+        <div class="d-flex flex-column gap-2 w-100">
+          <input
+            type="email"
+            placeholder="Enter Email"
+            formControlName="regEmail"
+            [ngClass]="{
+              'border-danger': this.form.get('email')?.invalid && this.form.get('email')?.touched,
+            }"
+          />
 
-      <div class="row_div h_56">
-        <div class="col_div">
-          <label class="d-flex align-items-center"
-            ><span>User Sync</span>
-            <div class="show_box">
-              <i-feather name="info" class="info_icon pointer"></i-feather>
-
-              <div class="custom_tooltip_section">
-                <div class="arrow"></div>
-                <div class="user_sync_head">User Sync</div>
-                <div class="user_sync_txt">
-                  Enable User Sync if the product required additional user data from the ACL.
-                </div>
-              </div>
-            </div></label
-          >
-        </div>
-        <div class="col_div w-100">
-          <div class="switch_wrapper">
-            <div class="switch_section">
-              <label class="switch disable">
-                <input type="checkbox" formControlName="enableUserSync" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <span class="label">
-              {{
-                form.get('enableUserSync')?.value == true
-                  ? 'Required'
-                  : 'Not
-              Required'
-              }}
-            </span>
-          </div>
+          @if (this.form.get('email')?.touched && this.form.get('email')?.invalid) {
+            @if (
+              this.form.get('email')?.hasError('required') ||
+              this.form.get('email')?.hasError('whitespace')
+            ) {
+              <div class="error">Email is required.</div>
+            }
+            @if (this.form.get('email')?.hasError('email')) {
+              <div class="error">Email format is invalid.</div>
+            }
+          }
         </div>
       </div>
-      <div class="row_div h_56">
+      <div class="row_div">
         <div class="col_div">
-          <label class="d-flex align-items-center"
-            ><span>CATS Product</span>
-            <div class="show_box">
-              <i-feather name="info" class="info_icon pointer"></i-feather>
-
-              <div class="custom_tooltip_section">
-                <div class="arrow"></div>
-                <div class="user_sync_head">CATS Product</div>
-                <div class="user_sync_txt">
-                  This option is enabled by default and identifies the product as a CATS-managed
-                  internal product. Turn it off for products managed outside the CATS ecosystem.
-                </div>
-              </div>
-            </div></label
-          >
+          <label><span>Mobile No.</span><sup>*</sup></label>
         </div>
         <div class="col_div w-100">
-          <div class="switch_wrapper">
-            <div class="switch_section">
-              <label class="switch disable">
-                <input type="checkbox" formControlName="enableUserSync" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Enter Mobile No."
+            formControlName="mobileNo"
+            [ngClass]="{
+              'border-danger': form.get('mobileNo')?.touched && form.get('mobileNo')?.invalid,
+            }"
+          />
+          @if (form.get('mobileNo')?.touched && form.get('mobileNo')?.hasError('whitespace')) {
+            <div class="error">Mobile number cannot be empty or contain only spaces.</div>
+          }
         </div>
       </div>
       <div class="row_div flex_start">

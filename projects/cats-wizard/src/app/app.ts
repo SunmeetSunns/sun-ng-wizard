@@ -46,7 +46,6 @@ export class AppComponent {
   ];
   openWizard(modal: any) {
     this.modalService.open(modal, {
-      modalDialogClass: 'largeModel',
       backdrop: 'static',
     });
   }
