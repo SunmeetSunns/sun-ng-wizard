@@ -42,8 +42,8 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges, AfterViewIn
   @Input() height: string | number = 'calc(100vh - 96px)';
 
   /** Minimum supported size */
-  private readonly MIN_WIDTH = 810;
-  private readonly MIN_HEIGHT = 500;
+  private readonly MIN_WIDTH = 500;
+  private readonly MIN_HEIGHT = 300;
 
   @Output() onStepChange = new EventEmitter<{
     currentStep: number;
