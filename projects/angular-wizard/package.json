@@ -7,13 +7,13 @@
     "email": "sunmeet.codes@gmail.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/SunmeetSunns/sun-ng-wizard#readme",
+  "homepage": "https://github.com/SunmeetSunns/ngx-stepper-wizard#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SunmeetSunns/sun-ng-wizard.git"
+    "url": "git+https://github.com/SunmeetSunns/ngx-stepper-wizard.git"
   },
   "bugs": {
-    "url": "https://github.com/SunmeetSunns/sun-ng-wizard/issues"
+    "url": "https://github.com/SunmeetSunns/ngx-stepper-wizard/issues"
   },
   "keywords": [
     "angular",
