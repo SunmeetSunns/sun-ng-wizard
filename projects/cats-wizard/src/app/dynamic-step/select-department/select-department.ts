@@ -56,7 +56,7 @@ export class SelectDepartment {
     }
   }
   processAndGoToNextStep() {
-    this.wizard.setData('selectedRole', this.methods[this.selectedMethod]);
+    this.wizard.setData('selectedDept', this.methods[this.selectedMethod]);
 
     this.wizard.next();
   }

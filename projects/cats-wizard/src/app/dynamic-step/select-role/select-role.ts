@@ -21,18 +21,21 @@ export class SelectRole {
       desc: 'Continue as a student and complete your registration.',
       img: 'https://cdn-icons-png.flaticon.com/512/1995/1995574.png',
       disabled: false,
+      i: 0,
     },
     {
       title: 'Professional',
       desc: 'Continue as a professional and configure your profile.',
       img: 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png',
       disabled: false,
+      i: 1,
     },
     {
       title: 'Staff',
       desc: 'Staff onboarding is currently unavailable.',
       img: 'https://cdn-icons-png.flaticon.com/512/921/921347.png',
       disabled: true,
+      i: 2,
     },
   ];
   goToPrevStep() {

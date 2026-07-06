@@ -111,8 +111,8 @@ The wizard allows you to customize the modal dimensions.
 >
 > The wizard enforces a minimum supported modal size of:
 >
-> - **Width:** `810px`
-> - **Height:** `500px`
+> - **Width:** `500px`
+> - **Height:** `350px`
 >
 > Values smaller than these limits are automatically adjusted to ensure the wizard layout remains fully functional.
 
