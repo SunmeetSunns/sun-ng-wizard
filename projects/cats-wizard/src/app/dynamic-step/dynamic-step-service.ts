@@ -19,6 +19,9 @@ export class DynamicStepService {
 
       disabled: data.selectedRole.disabled,
       roleIndex: data.selectedRole.i ?? null,
+      stream: data?.selectedDept?.title,
+      streamDesc: data?.selectedDept?.desc,
+      streamImg: data?.selectedDept?.img,
     };
 
     this.storedData.update((current) => {

@@ -18,7 +18,7 @@
               'border-danger': form.get('name')?.touched && form.get('name')?.invalid,
             }"
           />
-          @if (form.get('name')?.touched) {
+          @if (form.get('name')?.touched && form.get('name')?.invalid) {
             <div class="error">Name cannot be empty or contain only spaces.</div>
           }
           @if (form.get('name')?.hasError('minlength')) {

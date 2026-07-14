@@ -25,10 +25,12 @@
 
         <div class="header_icons d-flex gap-3 align-items-center">
           <div class="add_bg pointer" (click)="toggleFullScreen()">
-            <i-feather
-              [name]="isFullScreen ? 'minimize-2' : 'maximize-2'"
-              class="fixed_size"
-            ></i-feather>
+            @if (isExpandable) {
+              <i-feather
+                [name]="isFullScreen ? 'minimize-2' : 'maximize-2'"
+                class="fixed_size"
+              ></i-feather>
+            }
           </div>
           <div class="add_bg pointer" (click)="closeWizard('closeModal')">
             <i-feather name="x" class="fixed_size"></i-feather>

@@ -35,7 +35,7 @@ export class NgxStepperWizardComponent implements OnInit, OnChanges, AfterViewIn
   @Input() wizardId = 'ngx-stepper-wizard';
   @Input() wizardTitle = 'Create New Configuration';
   @Input() dynamicSteps: WizardInterface[] = [];
-
+  @Input() isExpandable: boolean = true;
   /** Modal Size */
   @Input() width: string | number = '90%';
   @Input() maxWidth: string | number = '900px';

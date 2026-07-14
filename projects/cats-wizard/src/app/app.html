@@ -38,15 +38,15 @@
     <span class="demo-btn">View Demo →</span>
   </div>
 
-  <div class="grid-box">
+  <!-- <div class="grid-box">
     <div class="icon purple">⚡</div>
     <h3>Dynamic Step Wizard</h3>
     <p>Steps change dynamically based on user input.</p>
 
     <div class="card-preview dashed">+ Add Step</div>
 
-    <span class="demo-btn" (click)="openWizard(dynamicStepsRef)">View Demo →</span>
-  </div>
+    <span class="demo-btn" >View Demo →</span>
+  </div> -->
 
   <div class="grid-box">
     <div class="icon orange">⏭️</div>
@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <span class="demo-btn">View Demo →</span>
+    <span class="demo-btn" (click)="openWizard(dynamicStepsRef)">View Demo →</span>
   </div>
 
   <div class="grid-box">
@@ -136,6 +136,7 @@
     [width]="1800"
     [maxWidth]="'80vw'"
     [height]="550"
+    [isExpandable]="false"
   >
   </ngx-stepper-wizard>
 </ng-template>

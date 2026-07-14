@@ -83,6 +83,7 @@ import { NgxStepperWizardComponent, WizardInterface } from 'ngx-stepper-wizard';
     [height]="'80vh'"
     (onComplete)="submit()"
     (closeWizardEmitter)="closeWizard()"
+    [isExpandable]="false"
   >
   </ngx-stepper-wizard>
 </ng-template>
@@ -242,11 +243,12 @@ this.wizard.reset();
 
 # Inputs
 
-| Input        | Type              | Description                |
-| ------------ | ----------------- | -------------------------- |
-| wizardTitle  | string            | Wizard Title               |
-| wizardId     | string            | Unique Wizard Identifier   |
-| dynamicSteps | WizardInterface[] | Wizard Steps Configuration |
+| Input        | Type              | Description                       |
+| ------------ | ----------------- | --------------------------------- |
+| wizardTitle  | string            | Wizard Title                      |
+| wizardId     | string            | Unique Wizard Identifier          |
+| dynamicSteps | WizardInterface[] | Wizard Steps Configuration        |
+| isExpandable | boolean           | To Hide/Show expand functionality |
 
 ---
 
